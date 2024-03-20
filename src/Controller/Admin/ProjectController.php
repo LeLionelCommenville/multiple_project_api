@@ -6,6 +6,7 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,12 +34,34 @@ class ProjectController extends AbstractController
         $editForm = $this->createForm(ProjectType::class, $project);
         $editForm->handleRequest($request);
         if($editForm->isSubmitted() && $editForm->isValid()) {
+            $project->setUpdatedAt(new \DateTimeImmutable());
             $em->flush();
+            $this->addFlash('success', 'Project updated');
             return $this->redirectToRoute('admin.project.index'); 
         }
         return $this->render('admin/project/edit.html.twig', [
             'project' => $project,
             'form' => $editForm
+        ]);
+    }
+
+    #[Route('/create', name: '.create')]
+    public function create(Request $request, EntityManagerInterface $em): Response
+    {
+        $project = new Project();
+        $createForm = $this->createForm(ProjectType::class, $project);
+        $createForm->handleRequest($request);
+
+        if($createForm->isSubmitted() && $createForm->isValid()) {
+            $project->setCreatedAt(new \DateTimeImmutable());
+            $project->setUpdatedAt(new \DateTimeImmutable());
+            $em->persist($project);
+            $em->flush();
+            $this->addFlash('success', 'Project created');
+            return $this->redirectToRoute('admin.project.index');
+        }
+        return $this->render('admin/project/edit.html.twig', [
+            'form' => $createForm
         ]);
     }
 }
