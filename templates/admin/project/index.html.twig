@@ -3,10 +3,23 @@
 {% block title %}Hello ProjectController!{% endblock %}
 
 {% block body %}
-
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Project Name</th>
+            <th scope="col">Project Slug</th> 
+        </tr>
+    </thead>
+    <tbody>
 {% for project in projects %}
-    <h1 class="text-3-xl font-bold underline">{{ project.name }}</h1>
-    {{ project.slug }}
+    <tr>
+        <td>{{ project.name }}</td>
+        <td>{{ project.slug }}</td>
+        <td><a class="btn btn-primary btn-sm" href="{{ path('admin.project.edit', {id: project.id})}}">
+            Editer</a>
+        </td>
+    </tr>
 {% endfor %}
-
+    </tbody>
+</table>
 {% endblock %}
