@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ADMIN')]
 class CategoryController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    #[Route('/', name: '.index')]
     public function index(CategoryRepository $categoryRepository): Response {
         $categories = $categoryRepository->findAll();
         return $this->render('admin/category/index.html.twig', [
