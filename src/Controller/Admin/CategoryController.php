@@ -42,4 +42,19 @@ class CategoryController extends AbstractController
             "form" => $createForm
         ]);
     }
+
+    #[Route('/edit/{id}', name: '.edit', metods: ['GET', 'POST'])]
+    public function edit(Category $category, Request $request, EntityManagerInterface $em): Response {
+        $editForm = $this->createForm(CategoryType::class, $category);
+        $editForm->handleRequest($request);
+        if($editForm->isSubmitted() && $editForm->isValid()) {
+            $category->setUpdatedAt(new \DateTimeImmutable());
+            $em->flush();
+            return $this->redirectToRoute('admin.category.index');
+        }
+        return $this->render('admin/category/edit.html.twig', [
+            "category" => $category,
+            "form" => $editForm
+        ]);
+    }
 }
