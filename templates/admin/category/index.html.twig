@@ -12,7 +12,8 @@
             <th scope="col">Category Slug</th>
             <th scope="col">Project ID</th>
             <th scope="col">Project Name</th>
-            <th scope="col">Project Slug</th> 
+            <th scope="col">Project Slug</th>
+            <th scope="col">Actions</th> 
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,16 @@
             <td>{{ category.project.id}}</td>
             <td>{{ category.project.name}}</td>
             <td>{{ category.project.slug}}</td>
+            <td>
+                <a class="btn btn-primary btn-sm" 
+                href="{{path('admin.category.edit', { id: category.id } )}}">
+                    Edit
+                </a>
+                <a class="btn btn-danger btn-sm ms-1" 
+                href="{{path('admin.category.delete', { id: category.id } )}}">
+                    Delete
+                </a>
+            </td>
         </tr>
 {% endfor %}
     </tbody>
