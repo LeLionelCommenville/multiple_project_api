@@ -29,7 +29,7 @@ class Project
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'project')]
+    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'project', cascade: ['remove'])]
     private Collection $categories;
 
     public function __construct()

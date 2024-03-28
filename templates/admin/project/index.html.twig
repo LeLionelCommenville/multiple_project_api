@@ -19,8 +19,15 @@
         <tr>
             <td>{{ project.name }}</td>
             <td>{{ project.slug }}</td>
-            <td><a class="btn btn-primary btn-sm" href="{{ path('admin.project.edit', {id: project.id})}}">
-                Editer</a>
+            <td>
+                <a class="btn btn-primary btn-sm" 
+                href="{{ path('admin.project.edit', {id: project.id})}}">
+                    Edite
+                </a>
+                <a class="btn btn-danger btn-sm ms-2" 
+                href="{{ path('admin.project.delete', {id: project.id })}}">
+                    Delete
+                </a>
             </td>
         </tr>
 {% endfor %}
