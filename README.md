@@ -1,0 +1,1 @@
+Multi Project API est une API basée sur Symfony et API Platform. Son objectif principal est de centraliser les systèmes de favoris, de commentaires et de notations de plusieurs applications web portant sur divers sujets.
