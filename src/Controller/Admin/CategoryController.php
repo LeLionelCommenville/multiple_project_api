@@ -43,7 +43,7 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: '.edit', metods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: '.edit', methods: ['GET', 'POST'])]
     public function edit(Category $category, Request $request, EntityManagerInterface $em): Response {
         $editForm = $this->createForm(CategoryType::class, $category);
         $editForm->handleRequest($request);
