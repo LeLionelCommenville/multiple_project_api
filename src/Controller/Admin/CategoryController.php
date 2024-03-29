@@ -31,8 +31,6 @@ class CategoryController extends AbstractController
         $createForm->handleRequest($request);
 
         if($createForm->isSubmitted() && $createForm->isValid()) {
-            $category->setCreatedAt(new \DateTimeImmutable());
-            $category->setUpdatedAt(new \DateTimeImmutable());
             $em->persist($category);
             $em->flush();
             return $this->redirectToRoute('admin.category.index');
@@ -48,7 +46,6 @@ class CategoryController extends AbstractController
         $editForm = $this->createForm(CategoryType::class, $category);
         $editForm->handleRequest($request);
         if($editForm->isSubmitted() && $editForm->isValid()) {
-            $category->setUpdatedAt(new \DateTimeImmutable());
             $em->flush();
             return $this->redirectToRoute('admin.category.index');
         }

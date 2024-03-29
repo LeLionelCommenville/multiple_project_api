@@ -31,7 +31,6 @@ class ProjectController extends AbstractController
         $editForm = $this->createForm(ProjectType::class, $project);
         $editForm->handleRequest($request);
         if($editForm->isSubmitted() && $editForm->isValid()) {
-            $project->setUpdatedAt(new \DateTimeImmutable());
             $em->flush();
             $this->addFlash('success', 'Project updated');
             return $this->redirectToRoute('admin.project.index'); 
@@ -50,8 +49,6 @@ class ProjectController extends AbstractController
         $createForm->handleRequest($request);
 
         if($createForm->isSubmitted() && $createForm->isValid()) {
-            $project->setCreatedAt(new \DateTimeImmutable());
-            $project->setUpdatedAt(new \DateTimeImmutable());
             $em->persist($project);
             $em->flush();
             $this->addFlash('success', 'Project created');
