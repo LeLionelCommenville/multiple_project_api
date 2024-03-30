@@ -30,7 +30,6 @@ class CategoryType extends AbstractType
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, $this->formListenerFactory->autoSlug('name'))
             ->addEventListener(FormEvents::POST_SUBMIT, $this->formListenerFactory->timestamps());
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
