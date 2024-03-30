@@ -13,6 +13,7 @@
             <th scope="col">Category slug</th>
             <th scope="col">Comment text</th>
             <th scope="col">Comment Ext Id</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,12 @@
             <td>{{ comment.category.slug }}</td>
             <td>{{ comment.commentText }}</td>
             <td>{{ comment.externalId}}</td>
+            <td>
+                <a class="btn btn-success btn-sm ms-1" 
+                href="{{ path('admin.comment.edit', {id: comment.id} )}}">Editer</a>
+                <a class="btn btn-danger btn-sm" 
+                href="{{ path('admin.comment.delete', {id: comment.id} )}}">Delete</a>
+            </td>
         </tr>
 {% endfor %}
     </tbody>

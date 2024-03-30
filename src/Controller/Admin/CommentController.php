@@ -11,6 +11,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Requirement\Requirement;
 
 #[Route('admin/comment', name: 'admin.comment')]
 #[IsGranted('ROLE_ADMIN')]
@@ -23,6 +24,32 @@ class CommentController extends AbstractController
         return $this->render('admin/comment/index.html.twig', [
             'comments' => $comments
         ]);
+    }
+
+    #[Route('/edit/{id}', name: '.edit', methods: ['POST', 'GET'], requirements: ['id' => Requirement::DIGITS])]
+    public function edit(Comment $comment, Request $request, EntityManagerInterface $em)
+    {
+        $editForm = $this->createForm(CommentType::class, $comment);
+        $editForm->handleRequest($request);
+
+        if($editForm->isSubmitted() && $editForm->isValid()) {
+            $em->flush();
+            return $this->redirectToRoute('admin.comment.index');
+        }
+        return $this->render('admin/comment/edit.html.twig', [
+            'form' => $editForm,
+            'comment' => $comment
+
+        ]); 
+    }
+
+    #[Route('/delete/{id}', name: '.delete', requirements: ['id' => Requirement::DIGITS])]
+    public function delete(EntityManagerInterface $em, comment $comment)
+    {
+        $em->remove($comment);
+        $em->flush();
+        $this->addFlash('success', 'The comment has been deleted');
+        return $this->redirectToRoute('admin.comment.index');
     }
 
     #[Route('/create', name: '.create')]
