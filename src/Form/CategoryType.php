@@ -23,7 +23,7 @@ class CategoryType extends AbstractType
             ->add('slug')
             ->add('project', EntityType::class, [
                 'class' => Project::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'editer'
