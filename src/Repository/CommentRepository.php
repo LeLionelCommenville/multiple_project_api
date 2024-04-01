@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Comment>
@@ -16,9 +18,19 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CommentRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Comment::class);
+    }
+
+    public function paginateComment(int $page): PaginationInterface
+    {
+        $query = $this->createQueryBuilder('c')->orderBy('c.externalId');
+        return $this->paginator->paginate(
+            $query,
+            $page,
+            2
+        );        
     }
 
     //    /**

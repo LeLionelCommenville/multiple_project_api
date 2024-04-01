@@ -18,9 +18,10 @@ use Symfony\Component\Routing\Requirement\Requirement;
 class CommentController extends AbstractController
 {
     #[Route('/', name: '.index')]
-    public function index(CommentRepository $repository): Response
+    public function index(CommentRepository $repository,Request $request): Response
     {
-        $comments = $repository->findAll();
+        $page = $request->query->getInt('page', 1);
+        $comments = $repository->paginateComment($page);
         return $this->render('admin/comment/index.html.twig', [
             'comments' => $comments
         ]);
