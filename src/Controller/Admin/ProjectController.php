@@ -17,9 +17,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class ProjectController extends AbstractController
 {
     #[Route('/', name: '.index')]
-    public function index(ProjectRepository $repository): Response
+    public function index(ProjectRepository $repository, Request $request): Response
     {
-        $projects = $repository->findAll();
+        $page = $request->query->getInt('page', 1);
+        $projects = $repository->paginateProjects($page); 
         return $this->render('admin/project/index.html.twig', [
             'projects' => $projects,
         ]);
