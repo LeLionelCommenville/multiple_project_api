@@ -12,6 +12,7 @@ use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 use function PHPSTORM_META\map;
 
@@ -20,19 +21,24 @@ use function PHPSTORM_META\map;
     description: 'A project',
     operations: [
         new Get(),
-        new GetCollection(),
+    ],
+    normalizationContext: [
+        'groups' => ['project:read'],
     ]
+
 )]
 class Project
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['project:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Groups(['project:read'])]
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
