@@ -31,4 +31,17 @@ class categoryTest extends TestCase
         self::assertSame($now, $category->getCreatedAt());
         self::assertSame('test project', $category->getProject()->getName());
     }
+
+    public function testUpdatedAgoAndCreatedAgo()
+    {
+        $twoweeksago = new DateTimeImmutable('-2 week');
+        $category = (new Category())
+        ->setName('test category')
+        ->setSlug('test-category')
+        ->setcreatedAt($twoweeksago)
+        ->setupdatedAt($twoweeksago);
+        self::assertSame('2 weeks ago', $category->getCreatedAgo());
+        self::assertSame('2 weeks ago', $category->getUpdatedAgo());
+    }
+    
 }
