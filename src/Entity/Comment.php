@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CommentRepository;
+use Carbon\Carbon;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -99,6 +100,16 @@ class Comment
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function getCreatedAgo(): string
+    {
+        return Carbon::instance($this->getCreatedAt())->diffForHumans();
+    }
+
+    public function getUpdatedAgo(): string
+    {
+        return Carbon::instance($this->getCreatedAt())->diffForHumans();
     }
 
     public function getCategory(): ?Category
