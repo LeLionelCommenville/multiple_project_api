@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource(
     description: 'A Category',
     operations: [
-        new Get(),
+        new Get(uriTemplate: '/category/{id}'),
         new GetCollection()
     ]
 )]
