@@ -14,6 +14,8 @@ use ApiPlatform\Metadata\GetCollection;
 use APiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 #[ApiResource(
@@ -41,10 +43,13 @@ class Comment
     #[ORM\Column]
     private ?int $id = null;
     
+    #[Assert\NotBlank]
     #[Groups(['comment:read'],['comment:write'])]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $commentText = null;
 
+    #[Groups(['comment:read'],['comment:write'])]
+    #[Assert\NotBlank]
     #[ORM\Column]
     private ?int $externalId = null;
 
