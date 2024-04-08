@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use App\Repository\CommentRepository;
@@ -15,11 +16,12 @@ use APiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use ApiPlatform\Metadata\ApiFilter;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 #[ApiResource(
     description: 'A Comment',
+    paginationItemsPerPage: 10,
     operations: [
         new Get(uriTemplate: '/comment/{id}'),
         new Patch(),
@@ -35,6 +37,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         'groups' => ['comment:write']
     ]
 )]
+#[ApiFilter(OrderFilter::class, properties:['createdAt' => 'DESC', 'updatedAt' => 'DESC'])]
 class Comment
 {
     #[Groups(['comment:read'],['comment:write'])]
@@ -139,13 +142,13 @@ class Comment
     #[Groups(['comment:read'])]
     public function getCreatedAgo(): string
     {
-        return Carbon::instance($this->getCreatedAt())->diffForHumans();
+        return Carbon::instance($this->getCreatedAt())->diffForHumans(['parts' => 2, 'join' => ', ']);
     }
 
     #[Groups(['comment:read'])]
     public function getUpdatedAgo(): string
     {
-        return Carbon::instance($this->getCreatedAt())->diffForHumans();
+        return Carbon::instance($this->getCreatedAt())->diffForHumans(['parts' => 2, 'join' => ', ']);
     }
 
     public function getCategory(): ?Category
