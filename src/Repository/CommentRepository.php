@@ -29,8 +29,19 @@ class CommentRepository extends ServiceEntityRepository
         return $this->paginator->paginate(
             $query,
             $page,
-            2
+            4
         );        
+    }
+
+    public function commentByCategory (int $categoryId, $page) {
+        $query = $this->createQueryBuilder('c')
+            ->andWhere('c.Category = :categoryId')
+            ->setParameter('categoryId', $categoryId);
+        return $this->paginator->paginate(
+            $query,
+            $page,
+            4
+        );
     }
 
     //    /**
