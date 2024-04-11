@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Odm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
@@ -18,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
         new GetCollection()
     ]
 )]
+#[ApiFilter(OrderFilter::class, properties:['name' => 'ASC'])]
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {
