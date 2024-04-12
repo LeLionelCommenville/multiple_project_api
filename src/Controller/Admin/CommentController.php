@@ -27,6 +27,16 @@ class CommentController extends AbstractController
         ]);
     }
 
+    #[Route('/category/{id}', name: '.category')]
+    public function categoryComments(CommentRepository $repository, Request $request, int $id): Response
+    {
+        $page = $request->query->getInt('page', 1);
+        $comments = $repository->commentByCategory($id, $page);
+        return $this->render('admin/comment/index.html.twig', [
+            'comments' => $comments
+        ]); 
+    } 
+
     #[Route('/edit/{id}', name: '.edit', methods: ['POST', 'GET'], requirements: ['id' => Requirement::DIGITS])]
     public function edit(Comment $comment, Request $request, EntityManagerInterface $em)
     {
