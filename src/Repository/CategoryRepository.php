@@ -37,6 +37,21 @@ class CategoryRepository extends ServiceEntityRepository
             );
     }
 
+    public function categoriesByProject(int $projectId, int $page): PaginationInterface
+    {
+        $builder = $this->createQueryBuilder('p')
+            ->andWhere('p.project = :projectId')
+            ->setParameter('projectId', $projectId);
+        return $this->paginator->paginate(
+            $builder,
+            $page,
+            2,
+            [
+                'distinct' => false
+            ]
+        );
+    }
+
     //    /**
     //     * @return Category[] Returns an array of Category objects
     //     */

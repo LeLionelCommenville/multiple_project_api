@@ -25,6 +25,16 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    #[Route('/project/{id}', name: '.project')]
+    public function projectCategories(CategoryRepository $repository, Request $request, int $id): Response
+    {
+        $page = $request->query->getInt('page', 1);
+        $categories = $repository->categoriesByProject($id, $page);
+        return $this->render('admin/category/index.html.twig', [
+            'categories' => $categories
+        ]); 
+    } 
+
     #[Route('/create', name: '.create' )]
     public function create(CategoryRepository $categoryRepository, Request $request, EntityManagerInterface $em): Response {
         $category = new Category();
