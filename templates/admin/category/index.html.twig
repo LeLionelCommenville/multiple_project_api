@@ -33,6 +33,10 @@
                 href="{{path('admin.category.delete', { id: category.id } )}}">
                     Delete
                 </a>
+                <a class="btn btn-success btn-sm ms-1"
+                href="{{path('admin.comment.category', {id: category.id } )}}">
+                    Comments
+                </a>
             </td>
         </tr>
 {% endfor %}

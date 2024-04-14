@@ -20,14 +20,20 @@
             <td>{{ project.name }}</td>
             <td>{{ project.slug }}</td>
             <td>
-                <a class="btn btn-primary btn-sm" 
-                href="{{ path('admin.project.edit', {id: project.id})}}">
-                    Edite
-                </a>
-                <a class="btn btn-danger btn-sm ms-2" 
-                href="{{ path('admin.project.delete', {id: project.id })}}">
-                    Delete
-                </a>
+                <div class="d-flex-gap-1">
+                    <a class="btn btn-primary btn-sm" 
+                    href="{{path('admin.project.edit', { id: project.id } )}}">
+                        Edit
+                    </a>
+                    <a class="btn btn-danger btn-sm ms-1" 
+                    href="{{path('admin.project.delete', { id: project.id } )}}">
+                        Delete
+                    </a>
+                    <a class="btn btn-success btn-sm ms-1"
+                    href="{{path('admin.category.project', {id: project.id } )}}">
+                        Comments
+                    </a>
+                </div>
             </td>
         </tr>
 {% endfor %}
