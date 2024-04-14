@@ -60,7 +60,7 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/delete/{id}', name: '.delete', requirements: ['id' => '\d+'])]
+    #[Route('/delete/{id}', name: '.delete', methods:['GET'], requirements: ['id' => '\d+'])]
     public function delete(Project $project, EntityManagerInterface $em): Response
     {
         $project_name = $project->getName();
